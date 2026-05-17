@@ -114,7 +114,6 @@ body {
 <link rel='manifest' href='index.manifest.json'>
 
 <script src="coi-serviceworker.js"></script>
-<script src="https://cloudflare.com"></script>
 
 <script>
     // Если защита еще не включилась, регистрируем воркер и ПЕРЕЗАГРУЖАЕМ страницу
@@ -125,6 +124,30 @@ body {
         });
     }
 </script>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <title>Pig and pancakes</title>
+    <!-- Твои стили <style> ... </style> остаются на месте -->
+
+    <link rel='apple-touch-icon' href='index.apple-touch-icon.png'/>
+    <link rel='manifest' href='index.manifest.json'>
+
+    <!-- 1. Наш главный костыль для Godot 4 -->
+    <script src="coi-serviceworker.js"></script>
+    
+    <!-- 2. Библиотека для распаковки твоего ZIP-файла -->
+    <script src="https://cloudflare.com"></script>
+
+    <script>
+        // Принудительная активация защиты SharedArrayBuffer
+        if (!window.crossOriginIsolated && 'serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./coi-serviceworker.js').then(() => {
+                console.log("COI Worker registered. Reloading...");
+                location.reload();
+            });
+        }
+    </script>
 </head>
 		<canvas id="canvas">
 			HTML5 canvas appears to be unsupported in the current browser.<br >
