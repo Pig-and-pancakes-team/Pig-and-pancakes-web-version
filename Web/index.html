@@ -124,28 +124,8 @@ body {
         });
     }
 </script>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no">
-    <title>Pig and pancakes</title>
-    <!-- Твои стили <style> ... </style> остаются на месте -->
-
-    <link rel='apple-touch-icon' href='index.apple-touch-icon.png'/>
-    <link rel='manifest' href='index.manifest.json'>
-
-    <!-- 1. Наш главный костыль для Godot 4 -->
+<link rel='manifest' href='index.manifest.json'>
 <script src="coi-serviceworker.js"></script>
-<script src="https://cloudflare.com"></script>
-
-    <script>
-        // Принудительная активация защиты SharedArrayBuffer
-        if (!window.crossOriginIsolated && 'serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./coi-serviceworker.js').then(() => {
-                console.log("COI Worker registered. Reloading...");
-                location.reload();
-            });
-        }
-    </script>
 </head>
 		<canvas id="canvas">
 			HTML5 canvas appears to be unsupported in the current browser.<br >
@@ -170,18 +150,9 @@ body {
 
 		<script src="index.js"></script>
 		<script>
-const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":2574240},"focusCanvas":true,"gdextensionLibs":[],"serviceWorker":"index.service.worker.js"};
-			engine.setBinaryAsync(async (url) => {
-    if (url.endsWith('.wasm')) {
-        const response = await fetch(url);
-        const arrayBuffer = await response.arrayBuffer();
-        const zip = await JSZip.loadAsync(arrayBuffer);
-        const wasmFile = Object.keys(zip.files).find(name => name.endsWith('.wasm'));
-        return await zip.file(wasmFile).async("uint8array");
-    }
-    return fetch(url);
-});
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":2574240,"index.wasm":28972640},"focusCanvas":true,"gdextensionLibs":[],"serviceWorker":"index.service.worker.js"};
 const engine = new Engine(GODOT_CONFIG);
+
 
 (function () {
 	const INDETERMINATE_STATUS_STEP_MS = 100;
