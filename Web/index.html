@@ -134,10 +134,8 @@ body {
     <link rel='manifest' href='index.manifest.json'>
 
     <!-- 1. Наш главный костыль для Godot 4 -->
-    <script src="coi-serviceworker.js"></script>
-    
-    <!-- 2. Библиотека для распаковки твоего ZIP-файла -->
-    <script src="https://cloudflare.com"></script>
+<script src="coi-serviceworker.js"></script>
+<script src="https://cloudflare.com"></script>
 
     <script>
         // Принудительная активация защиты SharedArrayBuffer
@@ -173,6 +171,16 @@ body {
 		<script src="index.js"></script>
 		<script>
 const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":2574240},"focusCanvas":true,"gdextensionLibs":[],"serviceWorker":"index.service.worker.js"};
+			engine.setBinaryAsync(async (url) => {
+    if (url.endsWith('.wasm')) {
+        const response = await fetch(url);
+        const arrayBuffer = await response.arrayBuffer();
+        const zip = await JSZip.loadAsync(arrayBuffer);
+        const wasmFile = Object.keys(zip.files).find(name => name.endsWith('.wasm'));
+        return await zip.file(wasmFile).async("uint8array");
+    }
+    return fetch(url);
+});
 const engine = new Engine(GODOT_CONFIG);
 
 (function () {
