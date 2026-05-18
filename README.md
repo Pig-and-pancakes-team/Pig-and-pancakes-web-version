@@ -1,5 +1,8 @@
 # Pig-and-pancakes-web-version
 
+I don't know if it will run on a phone. On a computer, everything is fine.
+
+
 Pig and pancakes
 (Web Demo 3.0) 🥞
 
